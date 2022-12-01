@@ -1,0 +1,6 @@
+Type Of Data,Normal Variables,Normal Variables with PCA,Standard Scaled Variables,Standard Scaled Variables with PCA,Robust Scaled Variables,Robust Scaled Variables with PCA,MinMax Scaled Variables,MinMax Scaled Variables with PCA
+MAE,0.638,0.631,0.211,0.296,0.271,0.633,0.237,0.265
+MSE,0.639,0.773,0.112,0.227,0.22,0.635,0.142,0.196
+RMSE,0.799,0.879,0.335,0.476,0.469,0.797,0.377,0.443
+R^2,-0.001,-0.212,0.824,0.644,0.655,0.004,0.777,0.692
+Standard Error,0.802,0.877,0.336,0.478,0.464,0.8,0.376,0.445
