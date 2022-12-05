@@ -40,9 +40,17 @@ a00571636@tec.mx, a01740019@tec.mx, a01741085@tec.mx, a01253099@tec.mx}}
 \maketitle
 %% -----------------------------------------  (E) Header
 %% -----------------------------------------  (B) Metadata
-%% \begin{abstract}
-%%Aqui uno pone el abstract. puedes remover esta parte
-%%\end{abstract}
+\begin{abstract}
+Having access to streamgage imagery allows for hydrologic conditions of its location to be visually verified. The University of Nebraska extracted features of the North Platte River State Line Weir from over 40,000 daylight images taken at one-hour intervals from 2012 to 2019.
+
+With this data, Multilayer Perceptron (MLP), Support Vector Regression (SVR) and Random Forest Regression (RFR) models for predicting stream stage and discharge were trained; with RFR yielding the best results.
+
+Following a different approach from the original paper, the preexisting architectures \textit{EfficientNetB0} \& \textit{ResNet101} were trained using the 40,000+ images of the river. The results initially suggest that \textit{EffientNetB0} is the better model, but looking more closely at the resulting behaviours shows that \textit{ResNet101}'s performance better resembles the seasonal pattern of the data.
+
+The evaluation of the models presented in this document were done using the same loss metrics (MAE, MSE, RMSE \& SE) from the original paper by the University of Nebraska.
+
+And so, this work looks to find out if there are any improvements left to be made over the original models and work methodologies.
+\end{abstract}
 
 % Aqui van las palabras clave. Se pueden remover desde begin a end y no pasa nada
 \begin{IEEEkeywords}
@@ -53,7 +61,6 @@ Machine Learning, CNN, Regression, Stream Discharge, Stream Stage.
 %% -----------------------------------------  (B) Introduction
 
 \section{INTRODUCTION}
-%para letras en negritas se usa \textbf{hola negritas}, para letras italicas \textit{italianoo} para cosas matematicas dentro del parrafo se ponen entre $3x =2$ y para cosas matematicas fuera de parrafo se pone $$xx+1=x3$$.
 
 A streamgage contains instruments that measure and record the amount of water flowing in the river or stream, or its discharge \cite{streamgage}.
 
@@ -61,8 +68,7 @@ Having access to continuous data from streamgages is essential when calibrating 
 
 Cameras can help in this regard, since they provide redundancy with information unavailable from sensors. This imagery allows for hydrologic conditions to be visually verified (e.g., the presence of ice, obstructions, etc.).
 
-In the instance of an actual gap in the data, having those images allows for
-a qualitative assessment to confirm that the chosen gap filling method accurately represents the actual state of the stream during that certain time period.
+In the instance of an actual gap in the data, having those images allows for a qualitative assessment to confirm that the chosen gap filling method accurately represents the actual state of the stream during that certain time period.
 
 With this, the objective of the current work is to fill stream discharge and stage data gaps using machine learning models for a location with camera availability.
 
@@ -89,8 +95,7 @@ PCA was used for feature selection and new iterations of the models were trained
 All of the above methods were alternatively trained with re-scaled data, using each of the following scalers: Standard, Robust and MinMax. Strings and non-numeric values have been dropped, except for the date, which was processed to create a new column called 'year' of numeric datatype.
 
 \subsection{\textbf{Training Convolutional Neural Networks}}
-We opted to make use of the already trained architectures \textit{EfficientNetB0} \& \textit{ResNet101} available in the \href{https://www.tensorflow.org/api_docs/python/tf/keras/applications}{\textit{Keras Applications} module}. We concluded that it'd be a better use of our time to focus on getting and comparing results rather than building an architecture from scratch, which, in the event of failure, we wouldn't really know if it failed due to errors
-in the implementation or if it just wasn't the right fit for the project. Thus, we preferred to work with preexisting models that have already been proven to work in order to speed up the process.
+We opted to make use of the already trained architectures \textit{EfficientNetB0} \& \textit{ResNet101} available in the \href{https://www.tensorflow.org/api_docs/python/tf/keras/applications}{\textit{Keras Applications} module}. We concluded that it'd be a better use of our time to focus on getting and comparing results rather than building an architecture from scratch, which, in the event of failure, we wouldn't really know if it failed due to errors in the implementation or if it just wasn't the right fit for the project. Thus, we preferred to work with preexisting models that have already been proven to work in order to speed up the process.
 \subsubsection{Data distribution}
 The images were separated into two datasets: training and testing data. The images of each dataset were selected by years (2015-17 for testing and the remaining years for training), this due to the seasonal behaviour exhibited by the data.
 \subsubsection{Preprocessing the data}
@@ -280,6 +285,7 @@ The resulting values (see \textit{Table VII}) might make it seem that \textit{Ef
 \end{figure}
 
 %% -----------------------------------------  (B) Discussion 
+\newpage
 \section{DISCUSSIONS AND CONCLUSIONS}
 In this project we proposed two different approaches: the first one using the variables from the CSV file with different scaling techniques and the second one using the 40,000+ images provided by the University of Nebraska to train preexisting CNN architectures.
 The best results we got were from the Random Forest Regression model using standard scaling (for predicting stage) with a MSE of 0.08 and a MAE of 0.14, which seem to be good results, however, these values are not strictly an indicator of how reliable the model is, as it could be predicting an average of the samples instead of following the seasonal pattern or trend as it should be.
@@ -287,6 +293,7 @@ The best results we got were from the Random Forest Regression model using stand
 We believe that better results can be obtained if we continue working on CNNs while tweaking several different aspects that were not explored in this project, for example, grouping the data by week of the year, or month, to better take into account the seasonality of the data.
 
 \newpage
+\clearpage
 \section{APPENDICES}
 
 \subsection{Feature description}
